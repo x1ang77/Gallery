@@ -9,5 +9,17 @@
         android:id="@+id/mainFragment"
         android:name="com.xiangze.gallery.ui.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_imageViewerFragment"
+            app:destination="@id/imageViewerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/imageViewerFragment"
+        android:name="com.xiangze.gallery.ui.ImageViewerFragment"
+        android:label="fragment_image_viewer"
+        tools:layout="@layout/fragment_image_viewer" >
+        <argument android:name="pos"
+            app:argType="integer"/>
+    </fragment>
 </navigation>
