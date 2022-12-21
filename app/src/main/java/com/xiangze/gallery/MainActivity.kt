@@ -8,7 +8,6 @@ import java.io.File
 
 class MainActivity : AppCompatActivity() {
     var images: List<File> = listOf()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -16,12 +15,12 @@ class MainActivity : AppCompatActivity() {
         getPermission()
     }
 
-    private fun getPermission(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+    private fun getPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                1
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1
             )
         }
+
     }
 }
