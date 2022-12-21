@@ -13,8 +13,6 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         app:defaultNavHost="true"
         app:navGraph="@navigation/main_nav_graph"
-        tools:layout_editor_absoluteX="153dp"
-        tools:layout_editor_absoluteY="73dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

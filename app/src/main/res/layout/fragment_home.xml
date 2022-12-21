@@ -6,11 +6,11 @@
     tools:context=".ui.HomeFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="8dp"
         android:paddingVertical="8dp" >
-
     </androidx.recyclerview.widget.RecyclerView>
 
 </FrameLayout>
