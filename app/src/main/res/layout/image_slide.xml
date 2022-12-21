@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<!--    <androidx.viewpager2.widget.ViewPager2-->
+<!--        android:id="@+id/vpImage"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingStart="16dp"-->
+<!--        android:paddingEnd="16dp"-->
+<!--        android:clipToPadding="false"-->
+<!--        android:clipChildren="false"-->
+<!--        android:layout_gravity="center" />-->
+<!--    <androidx.appcompat.widget.AppCompatButton-->
+<!--        android:id="@+id/btnBack"-->
+<!--        android:backgroundTint="@color/purple_700"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:layout_width="150dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_gravity="center|bottom"-->
+<!--        android:text="Back"/>-->
+        <ImageView
+            android:id="@+id/ivImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:contentDescription="TODO"
+            android:text="@string/hello_blank_fragment" />
+</FrameLayout>

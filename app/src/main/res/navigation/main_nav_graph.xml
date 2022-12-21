@@ -9,5 +9,20 @@
         android:id="@+id/firstFragment"
         android:name="com.xiangze.gallery.ui.FirstFragment"
         android:label="fragment_first"
-        tools:layout="@layout/fragment_first" />
+        tools:layout="@layout/fragment_first" >
+        <action
+            android:id="@+id/action_first_self"
+            app:destination="@id/firstFragment" />
+        <action
+            android:id="@+id/action_firstFragment_to_secondFragment"
+            app:destination="@id/secondFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/secondFragment"
+        android:name="com.xiangze.gallery.ui.SecondFragment"
+        android:label="fragment_second"
+        tools:layout="@layout/fragment_second" >
+        <argument android:name="pos"
+            app:argType="integer"/>
+    </fragment>
 </navigation>
