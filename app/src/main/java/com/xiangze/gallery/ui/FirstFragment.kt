@@ -7,8 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.xiangze.gallery.MainActivity
 import com.xiangze.gallery.R
 import com.xiangze.gallery.adapters.ImageAdapter
 import com.xiangze.gallery.databinding.FragmentFirstBinding
@@ -18,6 +21,13 @@ class FirstFragment : Fragment() {
     private lateinit var binding: FragmentFirstBinding
     private val images: MutableList<File> = mutableListOf()
     private lateinit var adapter: ImageAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val path = Environment.getExternalStorageDirectory().path
+        getImages(path)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,11 +39,9 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val path = Environment.getExternalStorageDirectory().path
-        getImages(path)
 
+        (requireActivity() as MainActivity).images = images
         setupAdapter(images)
-//        images.map { Log.d("debugging", images.size.toString()) }
     }
 
     private fun getImages(path: String) {
@@ -55,7 +63,10 @@ class FirstFragment : Fragment() {
     private fun setupAdapter(images: List<File>) {
         val layoutManager = GridLayoutManager(requireContext(), 3)
 
-        adapter = ImageAdapter(images)
+        adapter = ImageAdapter(images) {
+            val action = FirstFragmentDirections.actionFirstFragmentToImageViewerFragment(it)
+            NavHostFragment.findNavController(this).navigate(action)
+        }
 
         binding.rvImages.layoutManager = layoutManager
         binding.rvImages.adapter = adapter

@@ -9,6 +9,7 @@ import java.io.File
 
 class ImageAdapter(
     var images: List<File>,
+    val onClick: (position: Int) -> Unit
 ) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
 
@@ -24,6 +25,10 @@ class ImageAdapter(
         holder.binding.run {
             if (item.isFile) {
                 ivImage.setImageURI(Uri.fromFile(item))
+
+                cvImage.setOnClickListener {
+                    onClick(position)
+                }
             }
         }
     }
