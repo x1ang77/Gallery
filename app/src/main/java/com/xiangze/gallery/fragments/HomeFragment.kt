@@ -1,60 +1,75 @@
 package com.xiangze.gallery.fragments
 
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
+import com.xiangze.gallery.MainActivity
 import com.xiangze.gallery.R
+import com.xiangze.gallery.adapters.FileAdapter
+import com.xiangze.gallery.databinding.FragmentHomeBinding
+import java.io.File
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding: FragmentHomeBinding
+    private lateinit var adapter: FileAdapter
+    private val images: MutableList<File> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        val path = Environment.getExternalStorageDirectory().path
+        getImages(path)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        binding = FragmentHomeBinding.inflate(layoutInflater)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        (requireActivity() as MainActivity).images = images
+
+        images.map {
+            Log.d("debugging", it.name)
+        }
+
+        adapter = FileAdapter(images)
+        {
+            val directory = HomeFragmentDirections.actionHomeFragmentToImageFragment(it)
+            NavHostFragment.findNavController(this).navigate(directory)
+            Log.d("Number", "$it")
+        }
+        val layoutManager = GridLayoutManager(requireContext(), 3)
+        binding.rvFiles.adapter = adapter
+        binding.rvFiles.layoutManager = layoutManager
+    }
+
+    private fun getImages(path: String) {
+        val root = File(path)
+
+        val files = root.listFiles()?.toList() ?: listOf()
+        for (file in files) {
+            if (Regex(".jpg|.jpeg|.png").containsMatchIn(file.name)) {
+                images.add(file)
             }
+        }
+
+        for (file in files) {
+            if (file.isDirectory) {
+                getImages(file.path)
+            }
+        }
     }
 }

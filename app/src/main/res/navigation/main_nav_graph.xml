@@ -9,5 +9,26 @@
         android:id="@+id/homeFragment"
         android:name="com.xiangze.gallery.fragments.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_self"
+            app:destination="@id/homeFragment" />
+        <argument
+            android:name="path"
+            android:defaultValue="null"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_homeFragment_to_imageFragment"
+            app:destination="@id/imageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="com.xiangze.gallery.fragments.ImageFragment"
+        android:label="fragment_image"
+        tools:layout="@layout/fragment_image">
+        <argument
+            android:name="position"
+            app:argType="integer" />
+    </fragment>
 </navigation>

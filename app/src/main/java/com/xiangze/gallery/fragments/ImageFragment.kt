@@ -1,0 +1,52 @@
+package com.xiangze.gallery.fragments
+
+import android.net.Uri
+import android.os.Bundle
+import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.CompositePageTransformer
+import com.xiangze.gallery.MainActivity
+import com.xiangze.gallery.R
+import com.xiangze.gallery.adapters.ImageSliderAdapter
+import com.xiangze.gallery.databinding.FragmentImageBinding
+import kotlinx.coroutines.delay
+
+class ImageFragment : Fragment() {
+    private lateinit var binding: FragmentImageBinding
+    private lateinit var adapter: ImageSliderAdapter
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentImageBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val args: ImageFragmentArgs by navArgs()
+
+        val images = (requireActivity() as MainActivity).images
+        Log.d("debugging", images.size.toString())
+
+        val image = images[args.position]
+        Log.d("Present", "${args.position}")
+//        binding.ivImage.setImageURI(Uri.fromFile(image))
+
+        adapter = ImageSliderAdapter(images)
+
+        binding.vpImages.let { viewPager ->
+            viewPager.adapter = adapter
+//            viewPager.offscreenPageLimit = 3
+            viewPager.getChildAt(args.position)?.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+        }
+    }
+}
