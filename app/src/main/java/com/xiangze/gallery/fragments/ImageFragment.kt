@@ -37,16 +37,17 @@ class ImageFragment : Fragment() {
         val images = (requireActivity() as MainActivity).images
         Log.d("debugging", images.size.toString())
 
-        val image = images[args.position]
-        Log.d("Present", "${args.position}")
+//        val image = images[args.position]
 //        binding.ivImage.setImageURI(Uri.fromFile(image))
+//        Log.d("Present", "${args.position}")
 
         adapter = ImageSliderAdapter(images)
 
         binding.vpImages.let { viewPager ->
             viewPager.adapter = adapter
-//            viewPager.offscreenPageLimit = 3
-            viewPager.getChildAt(args.position)?.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+            viewPager.setCurrentItem(args.position, false)
+            //            viewPager.offscreenPageLimit = 3
+//            viewPager.getChildAt(0)?.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         }
     }
 }
