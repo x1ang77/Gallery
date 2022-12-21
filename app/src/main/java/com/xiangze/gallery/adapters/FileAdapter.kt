@@ -8,7 +8,7 @@ import com.xiangze.gallery.R
 import com.xiangze.gallery.databinding.ItemLayoutFileBinding
 import java.io.File
 
-class FileAdapter(var files: List<File>) :
+class FileAdapter(var files: List<File>, val onClick: (position: Int) -> Unit) :
     RecyclerView.Adapter<FileAdapter.FileViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileViewHolder {
@@ -23,6 +23,9 @@ class FileAdapter(var files: List<File>) :
             val uri = Uri.fromFile(item)
             ivFile.setImageURI(uri)
             tvFileName.text = item.name
+            cvFile.setOnClickListener {
+                onClick(position)
+            }
         }
     }
 

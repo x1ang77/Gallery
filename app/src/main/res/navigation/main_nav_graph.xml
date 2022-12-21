@@ -18,6 +18,21 @@
             android:defaultValue="null"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_home_to_imageViewer"
+            app:destination="@id/imageViewerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/imageViewerFragment"
+        android:name="com.xiangze.gallery.fragments.ImageViewerFragment"
+        android:label="fragment_image_viewer"
+        tools:layout="@layout/fragment_image_viewer">
+        <action
+            android:id="@+id/action_imageViewer_to_self"
+            app:destination="@id/imageViewerFragment" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
     </fragment>
 
 </navigation>

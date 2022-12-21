@@ -4,10 +4,13 @@ import android.Manifest
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import java.io.File
 
 // Joel Michael Seah Quan Shen
 
 class MainActivity : AppCompatActivity() {
+    var images: List<File> = listOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

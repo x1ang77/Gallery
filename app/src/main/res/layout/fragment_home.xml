@@ -19,7 +19,6 @@
         android:id="@+id/rv_files"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tv_title"
-        android:layout_marginTop="16dp" />
+        android:layout_below="@id/tv_title" />
 
 </RelativeLayout>

@@ -11,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import com.xiangze.gallery.MainActivity
 import com.xiangze.gallery.R
 import com.xiangze.gallery.adapters.FileAdapter
 import com.xiangze.gallery.databinding.FragmentHomeBinding
@@ -30,16 +31,23 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val path = Environment.getExternalStorageDirectory().path
+        getImages(path)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navArgs: HomeFragmentArgs by navArgs()
 
-        val path = if (navArgs.path != null && navArgs.path != "null") {
-            navArgs.path!!
-        } else {
-            Environment.getExternalStorageDirectory().path
-        }
-        getImages(path)
+        (requireActivity() as MainActivity).images = images
+        setupAdapter(images)
+
+//        .setOnClickListener {
+//            val action = HomeFragmentDirections.actionHomeToImageViewer(it.id)
+//            NavHostFragment.findNavController(this).navigate(action)
+//        }
     }
 
     private fun getImages(path: String) {
@@ -55,9 +63,6 @@ class HomeFragment : Fragment() {
                 getImages(file.path)
             }
         }
-        root.listFiles()?.let {
-            setupAdapter(images)
-        }
     }
 
     // droid4x
@@ -65,7 +70,10 @@ class HomeFragment : Fragment() {
 
     private fun setupAdapter(files: List<File>) {
         val layoutManager = GridLayoutManager(requireContext(), 3)
-        adapter = FileAdapter(files)
+        adapter = FileAdapter(files) {
+            val action = HomeFragmentDirections.actionHomeToImageViewer(it)
+            NavHostFragment.findNavController(this).navigate(action)
+        }
         binding.rvFiles.layoutManager = layoutManager
         binding.rvFiles.adapter = adapter
     }
